@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM</title>
+</head>
+<body>
+	<script>
+		/**
+		 * 滚动条
+		 * window.pageXOffset
+		 * window.pageYOffset
+		 *
+		 * IE9及以下
+		 * document.body.scrollLeft 和 window.pageXOffset一样
+		 * document.body.scrollTop
+		 *
+		 * IE8和IE8以下的浏览器(兼容性混乱，但是互相冲突，最好的用法就是相加)
+		 * document.body.scrollLeft/Top
+		 * document.documentElement.scrollLeft/Top
+		 * document.body.scrollLeft + document.documentElement.scrollLeft
+		 */
+		// 封装滚动条滚动距离
+		// 最后调用后返回两个值横向滚动距离和纵向滚动距离
+		function getScrollOffset(){
+			//当window.pageXOffset可以用的时候就用这个
+			if(window.pageXOffset){
+				return {
+					x : window.pageXOffset,
+					y : window.pageYOffset
+				}
+			}else{
+				return {
+					x : document.body.scrollLeft + document.documentElement.scrollLeft,
+					y : document.body.scrollTop + document.documentElement.scrollTop
+				}
+			}
+		}
+
+
+
+		/**
+		 * 求可视区窗口的尺寸
+		 *
+		 * W3C标准方法 IE8及IE8以下不兼容
+		 * window.innnerWith
+		 * window.innnerHeight
+		 *
+		 * IE8及IE8以下：
+		 * 		标准模式下任意浏览器均兼容：
+		 * document.documentElement.clientWIdth/clientHeight
+		 * 		适用于怪异模式：
+		 * document.body.clientWidth/clientHeight
+		 *
+		 * 判断是否标准模式：
+		 * 标准：CSS1Compat
+		 * 怪异：BackCompat  向后兼容
+		 */
+		function getViewportOffset(){
+			if(window.innetWidth){
+				return{
+					w: window.innetWidth,
+					h: window.innetHeight
+				}
+			}else{
+				if(document.compatMode == "BackCompat"){
+					return {
+						w : document.body.clientWidth,
+						h : document.body.clientHeight
+					}
+				}else{
+					return {
+						w : document.documentElement.clientWidth,
+						h : docuemnt.documentElement.clientHeight
+					}
+				}
+			}
+		}
+
+		/**
+		 * 查看元素的几何尺寸:
+		 * dom.offsetWidth/offsetHeight求的是视觉上的尺寸，不包含margin
+		 *
+		 * 求dom元素的位置：求的是相对于有定位的父级的位置
+		 * dom.offsetLeft/offsetHeight
+		 *
+		 * 求出最近的有定位的父级：
+		 * dom.offsetParent
+		 *
+		 * 求任意元素相对于文档的坐标getElememtPosition
+		 */
+		function getElementPosition(ele){
+			if(dom.offsetParent == )
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>canvas刮刮乐</title>
+</head>
+
+<body>
+    <canvas id="cvs" width=300 height=300></canvas>
+    <script>
+    var oCanvas = document.getElementById("cvs");
+    var ctx = oCanvas.getContext('2d');
+    var w = oCanvas.width;
+    var h = oCanvas.height;
+
+    //这里全局获取move函数断点的两个点的x,y，用于将他们相连用
+    var lastPoint = {},
+        nowPoint = {};
+
+    //因为背景图片一般是动态生成，所以这里写一个入口函数来动态获取背景图片
+    function init() {
+        // ctx.globalAlpha = 0.5;
+        ctx.fillStyle = "#ccc";
+        ctx.fillRect(0, 0, w, h);
+
+        //这里添加新旧像素合并方式,这个东西只要添在新旧像素之间就行
+        //就像素就是上面的那个蒙层，新像素就是画的圆
+        ctx.globalCompositeOperation = "destination-out";
+
+
+        // 这里最好再添加一个获得随机数的函数，将图片随机获取
+        // 
+
+
+        var img = new Image();
+        img.src = "../image/2.png"; //这块一般是请求一个ajax获取然后填入
+
+        img.onload = function() {
+            //图片加载完成将它放到canvas背景当中当中，行内样式
+            oCanvas.style.background = "url(" + img.src + ")";
+            //接下来要滑了，所以这里要绑定事件了
+            //因为在鼠标按下之后才触发鼠标移动事件，所以鼠标移动事件绑定在按下事件里面
+            //所以这里先触发按下事件
+            oCanvas.addEventListener('mousedown', downFunc, false);
+        }
+    }
+
+    init();
+
+    function downFunc(e) {
+
+        //在down下来的时候就将这个点保存为上一个点
+        lastPoint.x = e.clientX - oCanvas.offsetLeft;
+        lastPoint.y = e.clientY - oCanvas.offsetTop;
+
+        oCanvas.addEventListener("mousemove", moveFunc, false);
+        //有可能按下就抬起，没有move，所以要将up函数也绑定在down函数里面
+        //写拖拽也是这样
+
+        //如果up事件绑定在canvas上，鼠标移到别的地方抬起就会出现bug
+        //所以这个事件应该绑定在document上，无论鼠标在哪抬起，都应该触发up事件
+        document.addEventListener("mouseup", upFunc, false);
+    }
+
+    //鼠标移动过快，move函数跟不上会出现断点，无法解决只能在视觉上把他们连在一起
+    function moveFunc(e) {
+        //move函数里要做的事：
+        //1.画一个圆，用新旧路径重叠方式来将它变透明
+        //
+
+        //获取鼠标相对于canvas的位置，用于确定圆心,,后补为当前的point值
+        nowPoint.x = e.clientX - oCanvas.offsetLeft;
+        nowPoint.y = e.clientY - oCanvas.offsetTop;
+
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        // ctx.fillStyle = "transparent";//填充透明色
+
+        //上一个点与新点进行连线
+        ctx.lineWidth = 40; //圆半径20 
+        ctx.lineCap = "round";
+        ctx.moveTo(lastPoint.x, lastPoint.y);
+        ctx.lineTo(nowPoint.x, nowPoint.y);
+        ctx.stroke();
+
+        ctx.arc(nowPoint.x, nowPoint.y, 20, 0, Math.PI * 2, 0);
+        ctx.closePath();
+        ctx.fill();
+
+
+        //连线完成之后，将现在这个新点赋给上一个点
+        lastPoint.x = nowPoint.x;
+        lastPoint.y = nowPoint.y;
+    }
+
+    function upFunc() {
+        //鼠标抬起时取消掉move事件 和 up事件
+        oCanvas.removeEventListener("mousemove", moveFunc, false);
+        document.removeEventListener("mouseup", upFunc, false);
+        clearCanvas();
+    }
+
+    //当刮开区域差不多达到70%左右，就可以自动开了
+    //这个判断在鼠标抬起的时候就可以做了
+    function clearCanvas() {
+        //没刮开的灰色getImageData的rgba都有值
+        //刮开之后像素的getImageData就都变为0了
+        //具体判断前四个数据中的任意一个为0就可以(四个代表一个像素)
+        //最后将刮开的像素做一个总和，然后计算与整个canvas的像素区域的比例,看是否大于0.7
+        var d = ctx.getImageData(0, 0, w, h),
+            c = 0, //c保存的是所有被刮开的元素的总和，一开始是0个
+            len = d.data.length; //data值的总长度
+
+        for (var i = 0; i < len; i += 4) {
+            if (d.data[i] === 0) {
+                c++;
+            }
+        }
+        if (c > len / 4 * 0.7) { //如果大于，则清空整个canvas区域
+            ctx.clearRect(0, 0, w, h);
+        }
+    }
+    </script>
+</body>
+
+</html>
