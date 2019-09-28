@@ -1,0 +1,46 @@
+*{
+	margin:0;
+	padding:0;
+	list-style: none;
+	text-decoration: none;
+}
+
+body{
+	background-color: #0e141b;
+	overflow: hidden;
+}
+.wrapper{
+	width:100%;
+	text-align: center;
+}
+.wrapper .column,
+.wrapper .colon{
+	display:inline-block;/*默认会基于bottom对齐*/
+	color:white;
+	vertical-align: top;/*垂直对齐方式调整为顶部对齐*/
+	font-size:86px;
+	line-height: 86px;
+	font-weight:300;/*字体粗细*/
+}
+.column{
+	transition: all 300ms ease-in;
+}
+.colon{
+	opacity: 0.95;
+	/*calc():css中做运算*/
+	transform:translateY(calc(50vh - 53px));/*vh是以整个视口高度为单位，100份*/
+}
+
+.visible{
+	opacity: 0.85;
+	text-shadow: 0px 0px 20px #fff;
+}
+.close{
+	opacity:0.35;
+}
+.far{
+	opacity: 0.15;
+}
+.distance{
+	opacity:0.05;
+}

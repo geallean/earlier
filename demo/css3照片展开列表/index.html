@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>css3展开照片列表</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="wrapper init">
+        <ul class="content">
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image1</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">锦鲤抄</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image2</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">广寒宫</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image3</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">大美江湖</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image4</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">山有木兮</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image5</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">典狱司</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item">
+                <div class="inner">
+                    <div class="bg"></div>
+                    <div class="title">
+                        <h2>image6</h2>
+                    </div>
+                    <div class="dis">
+                        <div class="header">骨簪</div>
+                        <div class="close"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="../../third-js/jquery-3.4.1.min.js"></script>
+    <script>
+    var timer = setTimeout(function() {
+        $(".wrapper").removeClass("init");
+    }, 200)
+    $(".item").click(function() {
+        $(this).addClass('active');
+        $('.wrapper').addClass("wrapper-active");
+    })
+    // close的点击事件会冒泡到item上为其重新添加类名
+    $(".close").click(function(e){
+    	e.stopPropagation();
+    	$('.wrapper').removeClass("wrapper-active");
+    	$(".active").removeClass("active");
+    })
+    </script>
+</body>
+
+</html>

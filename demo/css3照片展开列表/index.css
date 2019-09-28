@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    /*wrapper为弹性盒子，里面的元素居中排列用下面的两个属性*/
+    justify-content: center;
+    /*水平居中*/
+    align-items: center;
+    /*侧轴方向也居中*/
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: #fff;
+}
+
+.content {
+    display: flex;
+    /*content为弹性盒子，里面的元素水平排开*/
+    justify-content: space-between;
+    width: 80%;
+    height: 80%;
+    /*在弹性盒子里的所有的项始终保持垂直居中，align-items是设在容器上的，作用于所有项*/
+    align-items:center;
+}
+
+.item {
+    width:16%;
+    height:100%;
+    border-radius:20px;
+    overflow:hidden;
+    background:#333;
+    /*点击关闭时，先改变宽，再改变高*/
+    transition:width 0.5s linear,height 0.5s linear 0.5s;
+}
+
+/*有active的item是展开的图片，没有就是点击后消失的*/
+
+.active{
+    width:100%;
+}
+/*没有active属性的item消失*/
+/*特殊情况：最开始的时候item都没有active类名，所以宽高都会变为0*/
+/*解决方法:如果有wrapper-active类名，那就是已点击的情况，不是初始化状态;*/
+.wrapper-active .item:not(.active){
+    width:0;
+    height:0;
+}
+/*有wrapper-active时，先改变高，再改变宽*/
+.wrapper-active .item{
+    /*宽度width改变需要有0.5s的延迟*/
+    transition:height 0.5s linear,width 0.5s linear 0.5s;
+}
+.item .inner {
+    position:relative;
+    width: 100%;
+    height: 100%;
+    border-radius:20px;
+    overflow:hidden;
+    transition:transform 0.5s linear;
+}
+/*为每一个设置延迟transform*/
+.item:nth-of-type(2) .inner{
+    transition-delay:0.1s;
+}
+.item:nth-of-type(3) .inner{
+    transition-delay:0.2s;
+}
+.item:nth-of-type(4) .inner{
+    transition-delay:0.3s;
+}
+.item:nth-of-type(5) .inner{
+    transition-delay:0.4s;
+}
+.item:nth-of-type(6) .inner{
+    transition-delay:0.5s;
+}
+
+
+
+/*有init属性是滑动展开的*/
+.init .item .inner{
+    transform:translate3d(0,100%,0);
+}
+.item .bg{
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    /*或者用rgba写到inner里，rgba些颜色子元素不会有透明度继承*/
+    opacity: 0.7;
+}
+
+.item:nth-of-type(1) .bg {
+    background-image:url(../../image/xueying1.jfif);
+}
+.item:nth-of-type(2) .bg {
+    background-image:url(../../image/xueying2.png);
+}
+.item:nth-of-type(3) .bg {
+    background-image:url(../../image/xueying3.jfif);
+}
+.item:nth-of-type(4) .bg {
+    background-image:url(../../image/xueying4.png);
+}
+.item:nth-of-type(5) .bg {
+    background-image:url(../../image/xueying5.png);
+}
+.item:nth-of-type(6) .bg {
+    background-image:url(../../image/xueying6.png);
+}
+
+.item .title{
+    /*相对于inner进行绝对定位*/
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+/*点开时让title的透明度为0进行隐藏*/
+.wrapper-active .item .title{
+    opacity: 0;
+    transition:opacity 0.2s linear;
+}
+
+.wrapper .title{
+    transition:opacity 0.2s linear 1s;
+}
+
+.item .title h2{
+    font-size:18px;
+}
+/*当鼠标hover时添加过渡动画*/
+/*当有事件触发动画的时候我们就用transition。比如hover事件mouseove、mouseout事件等等*/
+.item:hover .title h2{
+    font-size:20px;
+    transition:font-size 0.2s linear;
+}
+.item:hover .bg{
+    opacity:1;
+}
+
+.item .dis{
+    /*inner已经是relative元素了  */
+    position:absolute;
+    top:30px;
+    width:100%;
+    height:30px;
+    color:#000;
+    opacity:0;
+    transition: opacity 0.2s linear;
+}
+.item .header{
+    float:left;
+    margin-left:30px;
+    line-height:30px;
+    font-size:22px;
+    font-weight:bold;
+
+}
+.item .close{
+    position:relative;
+    width:30px;
+    height:30px;
+    float:right;
+    margin-right:30px;
+    cursor: pointer;
+}
+.item .close::before,
+.item .close::after {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    margin-top: -1px;
+    width:30px;
+    height:2px;
+    background:#000;
+}
+
+.item .close::before {
+    transform:rotate(45deg);
+}
+.item .close::after {
+    transform:rotate(-45deg);
+}
+.active .dis{
+    opacity:1;
+    transition:opacity 0.2s linear 1s;
+}
