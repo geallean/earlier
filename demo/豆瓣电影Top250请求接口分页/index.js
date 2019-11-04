@@ -44,7 +44,7 @@ function setMovieHtml(movie, page) {
         html += `<div class="data">
                         <div class="poster">
                             <em>${i + 1 + 4 * (page - 1)}</em>
-                            <img src="${m.images.medium}" alt="海報">
+                            <img src="${m.images.small || m.images.medium || m.images.large}" alt="海報">
                         </div>
                         <div class="info">
                             <h2 class="title">${m.title}</h2>
