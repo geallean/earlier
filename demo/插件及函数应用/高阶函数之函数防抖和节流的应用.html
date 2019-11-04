@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>函数防抖和节流</title>
+    <script src="helpers.js"></script>
+</head>
+
+<body>
+    防抖测试：输入内容停止输入两秒后返回内容
+    <br>
+    <input type="text">
+    <br>
+    <!-- 节流测试：输入内容停止输入两秒后返回内容
+    <br>
+    <input type="text"> -->
+    <script>
+
+    //高阶函数：在函数内部返回一个新的函数
+    //防抖：为防止频繁触发事件隐形性能，设置延迟事时间
+    //防抖返回的是一个handle函数
+    //handle函数中可以传参，可以指定this
+
+    var inp = document.querySelector("input");
+    var handle = myPlugin.debounce((val, inp) => {
+        // console.log(val);
+        alert("函数防抖传入参数为：" + val);
+    }, 2000);
+    //每次事件运行时运行这个防抖函数
+    inp.oninput = function() {
+        //不能用箭头函数，箭头函数的this在定义时就确定了，这里用箭头函数this指向window
+        var val = inp.value;
+        handle(val, this);
+    }
+
+
+
+
+    //函数节流：事件以固定频率触发
+    //保证一个时间段内执行一次
+    function test() {
+        console.log("a");
+    }
+    var handler = myPlugin.throttle(test, 1000);
+    window.onresize = function() {
+        handler();
+    }
+    </script>
+</body>
+
+</html>

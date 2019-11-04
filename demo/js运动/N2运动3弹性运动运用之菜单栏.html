@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>弹性运动之菜单栏</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    ul {
+    	position:relative;
+    	width:600px;
+    	height:80px;
+    	/*border:1px solid #000;*/
+    	margin:100px auto 0;
+    }
+    /*必须要有定位，才可以移动
+    position:absolute是参照最近有定位的父级进行定位
+    所以将ul设为position:relative*/
+    ul li.bg{
+    	position:absolute;
+    	left:0;
+    	top:0;
+		width:150px;
+		height:80px;
+		background:orange;
+		opacity:0.5;
+    }
+    ul li.nav{
+    	height:78px;
+    	border:1px solid #000;
+    	width:148px;
+    	color:#f00;
+    	text-align:center;
+    	line-height:78px;
+    	float:left;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li class="nav">node</li>
+        <li class="nav">Vue</li>
+        <li class="nav">ES6</li>
+        <li class="nav">BootStrape</li>
+        <li class="bg"></li>
+    </ul>
+
+    <script>
+		//将li转换成数组，数组方法slice-->
+		var oLiArray = Array.prototype.slice.call(document.getElementsByClassName('nav'));
+        // console.log(oLiArray);
+		var oBg = document.getElementsByClassName("bg")[0];
+		oLiArray.forEach(function(ele, index){
+            // 用onmouseenter是不冒泡的，但onmouseover是冒泡的
+			ele.onmouseenter = function(){
+				//获取鼠标碰到的li的边距作为目标值
+				var newLeft = this.offsetLeft;
+				startMove(oBg, newLeft);
+			}
+		})
+		// for(var i = 0; i < oLiArray)
+
+
+
+    	// 弹性运动函数
+    	function startMove(obj,target){
+    		clearInterval(obj.timer);
+    		//初速度大小，越大让它变为零需要的摩擦力就要越小
+    		var iSpeed = 40;
+    		//a为加速度，a的正负决定
+    		var a,u = 0.8;
+
+    		obj.timer = setInterval(function(){
+    			a = (target - obj.offsetLeft) / 8;
+    			iSpeed = iSpeed + a;
+    			//让速度每次乘一个小于1的数，就会让它越变越小
+    			iSpeed = iSpeed * u;
+
+    			//判断停止及设置位置
+    			if(Math.abs(iSpeed) <= 1 && Math.abs(target - obj.offsetLeft) <= 1){
+    				console.log("stop");
+    				clearInterval(obj.timer);
+    				obj.style.left = target + "px";
+    			}else{
+    				obj.style.left = obj.offsetLeft + iSpeed + "px";
+    			}
+    		},30)
+    	}
+    </script>
+</body>
+
+</html>

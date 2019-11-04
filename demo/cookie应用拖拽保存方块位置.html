@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>保存方块位置</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    #demo {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        width: 100px;
+        height: 100px;
+        background: orange;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="demo"></div>
+    <script>
+    var oDemo = document.getElementById('demo');
+
+    var mangeCookie = {
+        setCookie: function(name, value, time) {
+            document.cookie = name + "=" + value + ";max-age=" + time;
+            return this;
+        },
+        removeCookie: function(name) {
+            //使用自己封装的方法
+            return this.setCookie(name, "", -1);
+        },
+        //查找无法通过path进行查找
+        getCookie: function(name, callback) {
+            var allCookieArr = document.cookie.split("; ");
+            // console.log(allCookieArr);
+            for (var i = 0; i < allCookieArr.length; i++) {
+                var itemCookieArr = allCookieArr[i].split("=");
+                // console.log(itemCookieArr);
+                if (itemCookieArr[0] == name) {
+                    callback(itemCookieArr[1]);
+                    return this;
+                }
+            }
+            callback(undefined);
+            return this;
+        }
+    }
+
+    var drag = {
+        //入口函数
+        init: function(dom) {
+            this.dom = dom;
+            this.bindEvent();
+
+            var _this = this;
+
+            //取数据
+            mangeCookie.getCookie("newLeft", function(data) {
+                if (data) {
+                    //callback中this指向window
+                    _this.dom.style.left = data + "px";
+                }
+            }).getCookie("newTop", function(data) {
+                if (data) {
+                    _this.dom.style.top = data + "px";
+                }
+            })
+        },
+        //绑定事件
+        bindEvent: function() {
+            //用bind将this绑定到对象上
+            this.dom.onmousedown = this.mouseDown.bind(this);
+        },
+        mouseDown: function(e) {
+            console.log(this);
+            document.onmousemove = this.mouseMove.bind(this);
+            document.onmouseup = this.mouseUp.bind(this);
+
+            this.disY = e.clientY - this.dom.offsetTop;
+            this.disX = e.clientX - this.dom.offsetLeft;
+        },
+        mouseMove: function(e) {
+            console.log("s")
+            this.newLeft = e.clientX - this.disX;
+            this.newTop = e.clientY - this.disY;
+
+            this.dom.style.left = this.newLeft + "px";
+            this.dom.style.top = this.newTop + "px";
+        },
+        mouseUp: function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+            //当鼠标抬起存数据
+            mangeCookie.setCookie("newLeft", this.newLeft, 10000)
+                .setCookie("newTop", this.newTop, 10000)
+        }
+    }
+    drag.init(oDemo);
+    </script>
+</body>
+
+</html>

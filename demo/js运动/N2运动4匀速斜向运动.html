@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>加速运动之斜向运动</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		div{
+			width:100px;
+			height:100px;
+			background:orange;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+	<script>
+		var oDiv = document.getElementsByTagName('div')[0];
+		var timer = null;
+		oDiv.onclick = function(){
+			startMove(this);
+		}
+
+
+		//带模拟重力场的斜向运动
+		function startMove(obj){
+			clearInterval(obj.timer);
+			var iSpeedX = 8;
+			var iSpeedY = 0;
+			var g = 8;
+			obj.timer = setInterval(function(){
+				//模拟重力
+				iSpeedY += g;
+
+				var newLeft = obj.offsetLeft + iSpeedX;
+				var newTop = obj.offsetTop + iSpeedY;
+
+				if(newLeft >= document.documentElement.clientWidth - obj.offsetWidth){
+					//速度取反
+					iSpeedX *= -1;
+					//让能量在碰撞时损失,两个方向都损失
+    				iSpeedX = iSpeedX * 0.8;
+    				iSpeedY *= 0.8;
+					//防止加上一次速度超过边界
+					newLeft = document.documentElement.clientWidth - obj.offsetWidth;
+				}
+				if(newLeft <= 0){
+					iSpeedX *= -1;
+					iSpeedX = iSpeedX * 0.8;
+    				iSpeedY *= 0.8;
+					newLeft = 0;
+				}
+				
+				if(newTop >= document.documentElement.clientHeight - obj.offsetHeight){
+					iSpeedY *= -1;
+					iSpeedX = iSpeedX * 0.8;
+    				iSpeedY *= 0.8;
+					//obj.offsetHeight是获取元素本身的高度
+					newTop = document.documentElement.clientHeight - obj.offsetHeight;
+				}
+				if(newTop <= 0){
+					iSpeedY *= -1;
+					iSpeedX = iSpeedX * 0.8;
+    				iSpeedY *= 0.8;
+					newTop = 0;
+				}
+				obj.style.left = newLeft + "px";
+				obj.style.top = newTop + "px";
+			},30)
+		}
+
+
+		/*
+		带回弹的斜向运动
+		 */
+		// function startMove(obj){
+		// 	clearInterval(obj.timer);
+		// 	var iSpeedX = 6;
+		// 	var iSpeedY = 8;
+		// 	obj.timer = setInterval(function(){
+		// 		var newLeft = obj.offsetLeft + iSpeedX;
+		// 		var newTop = obj.offsetTop + iSpeedY;
+
+		// 		if(newLeft >= document.documentElement.clientWidth - obj.offsetWidth){
+		// 			//速度取反
+		// 			iSpeedX *= -1;
+		// 			//防止加上一次速度超过边界
+		// 			newLeft = document.documentElement.clientWidth - obj.offsetWidth;
+		// 		}
+		// 		if(newLeft <= 0){
+		// 			iSpeedX *= -1;
+		// 			newLeft = 0;
+		// 		}
+				
+		// 		if(newTop >= document.documentElement.clientHeight - obj.offsetHeight){
+		// 			iSpeedY *= -1;
+		// 			//obj.offsetHeight是获取元素本身的高度
+		// 			newTop = document.documentElement.clientHeight - obj.offsetHeight;
+		// 		}
+		// 		if(newTop <= 0){
+		// 			iSpeedY *= -1;
+		// 			newTop = 0;
+		// 		}
+		// 		obj.style.left = newLeft + "px";
+		// 		obj.style.top = newTop + "px";
+		// 	},30)
+		// }
+
+
+
+		/*
+		单纯的斜向运动
+		 */
+		// function startMove(obj){
+		// 	clearInterval(obj.timer);
+		// 	var iSpeedX = 6;
+		// 	var iSpeedY = 8;
+		// 	obj.timer = setInterval(function(){
+		// 		obj.style.left = obj.offsetLeft + iSpeedX + "px";
+		// 		obj.style.top = obj.offsetTop + iSpeedY + "px";
+		// 	},30)
+		// }
+	</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>科里化应用</title>
+    <style>
+    .container {
+        border: 2px solid;
+        padding: 30px;
+    }
+    </style>
+    <script src="helpers.js"></script>
+</head>
+
+<body>
+    <div class="container">
+    	<button id="btn">点击添加div</button>
+    </div>
+
+        <script>
+        /**
+         * 函数科里化
+         * curry
+         * 科里化函数：固定某个函数的一些参数，得到该函数剩余参数的一个新函数，如果没有剩余参数，则调用函数
+         */
+        //测试科里化：
+        /**
+         * 用来创建元素的函数
+         * @param  {[type]} container [容器]
+         * @param  {[type]} name      [创建的元素名称]
+         * @param  {[type]} props     [元素的属性]
+         * @param  {[type]} styles    [元素的样式]
+         * @return {[type]} content   [元素内容]
+         */
+        function createElement(container, name, props, styles, content) {
+            var ele = document.createElement(name);
+            container.appendChild(ele);
+
+            for (var prop in props) {
+                ele[prop] = props[prop];
+            }
+
+            for (var prop in styles) {
+                ele.style[prop] = styles[prop];
+            }
+            if (content) {
+                ele.innerHTML = content;
+            }
+        }
+
+        var div = document.querySelector(".container");
+
+        var create = myPlugin.curry(createElement, div, "div", {}, {
+            height: "50px",
+            background: "#eee",
+            margin: "40px"
+        });
+
+        create("创建div，点击按钮试试");
+        create("利用科里化固定函数和参数");
+        create("留下可变参数进行重复调用，减少代码冗余");
+
+        btn.onclick = function(){
+        	var content = prompt("请输入内容");
+        	create(content);
+        }
+        </script>
+</body>
+
+</html>

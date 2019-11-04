@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js数组方法原生封装实现</title>
+</head>
+
+<body>
+    <script>
+    var personArr = [
+        { name: "王刚", des: "颈椎不好", sex: "m" },
+        { name: "刘颖", des: "我是谁", sex: "f" },
+        { name: "王秀英", des: "我很好看", sex: "f" },
+        { name: "刘翔", des: "瓜皮刘", sex: "m" }
+    ]
+
+
+
+
+    //1.foreach 循环遍历，无返回值
+    personArr.forEach(function(ele, index) {
+        console.log(index);
+        console.log(ele);
+    })
+
+
+    //1.1.foreach没有返回结果
+
+    //1.2.封装以个自己的myForEach函数
+    Array.prototype.myForEach = function(func) {
+        //this指向调用这个函数的对象，数组调用就指向数组，所以i的取值是i<this.length
+        for (var i = 0; i < this.length; i++) {
+            //for循环每循环一次执行一次遍历，也就是调用一次回调函数func
+            //回调函数有两个参数，一个是数组元素，另一个是索引
+            //数组元素是this[i],索引是i
+            func(this[i], i);
+        }
+    }
+    //测试自己封装的forEach
+    // personArr.myForEach(function(ele, index) {
+    //     console.log(ele);
+    // })
+
+
+    //1.3.forEach不允许break
+    // personArr.forEach(function(ele, index) {
+    // 	if(index == 2){
+    // 		break;
+    // 	}
+    //     console.log(ele);
+    // })
+
+
+
+
+
+
+
+
+
+
+    //2.filter筛选 return为true的保留，然后返回一个保留的元素组成的新数组 
+    // personArr.filter(function(ele,index){
+    // 	return true;
+    // })
+
+    //2.1.filter会将筛选出来的元素重新组成一个新数组
+    // var newArr = personArr.filter(function(ele, index) {
+    //     if (ele.sex == "f") {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // })
+    // console.log(newArr);
+
+    //2.2.filter 的原型函数
+    // Array.prototype.myFilter = function(func) {
+    //     var arr = [];
+    //     for (var i = 0; i < this.length; i++) {
+    //         if (func(this[i], i)) {
+    //             arr.push(this[i]);
+    //         }
+    //     }
+    //     return arr;
+    // }
+
+    //2.2.测试自己定义
+    // var newArr = personArr.myFilter(function(ele, index) {
+    //     if (ele.sex == "f") {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // })
+    // console.log(newArr);
+
+
+
+
+
+
+
+
+
+
+
+
+    //3.map 循环遍历数组，处理return出来的值
+    // var newArr = personArr.map(function(ele, index) {
+    //     return 1;
+    // });
+    // console.log(newArr);//[1, 1, 1, 1]
+
+    //3.1.map方法返回的是return的值
+    // var newArr = personArr.map(function(ele, index) {
+    //     //如果性别为男则添加gf属性
+    //     if (ele.sex == "m") {
+    //         ele.girlF = true;
+    //         return ele;
+    //     } else {
+    //         ele.boyF = true;
+    //         return ele;
+    //     }
+    // });
+    // console.log(newArr);
+
+    //3.2.map中不作任何操作直接返回ele相当于遍历一遍原数组
+    //得到的是原数组的引用，改变相应的值原数组也会发生改变
+    //也就意味着map是浅拷贝
+    // var newArr = personArr.map(function(ele, index) {
+    //     return ele;
+    // });
+    // newArr[0].sex = "f";
+    // console.log(personArr[0]);
+
+
+    //3.3.原型上map的实现方法,浅拷贝
+    // Array.prototype.myMap = function(func) {
+    //     var arr = [];
+    //     for (var i = 0; i < this.length; i++) {
+    //         arr.push(func(this[i], i));
+    //     }
+    //     return arr;
+    // }
+    //测试浅拷贝
+    // var newArr = personArr.myMap(function(ele, index) {
+    //     return ele;
+    // });
+    // newArr[0].sex = "f";
+    // console.log(personArr);
+
+
+    //3.4.map深拷贝
+    Array.prototype.myMap = function(func) {
+        var arr = [];
+        for (var i = 0; i < this.length; i++) {
+            //判断每一项是不是引用类型，不是就直接push
+            if (this[i] && typeof(this[i]) == "object") {
+                var newobj = deepclone(this[i]);
+                arr.push(func(newobj, i));
+            } else {
+                arr.push(func(this[i], i));
+            }
+        }
+        return arr;
+    }
+    // 测试深拷贝
+    // var newArr = personArr.myMap(function(ele, index) {
+    //     return ele;
+    // });
+    // newArr[0].sex = "f";
+    // console.log(newArr);
+    // console.log(personArr);
+
+
+
+    //深拷贝实现
+    /**
+     * [deepclone 深克隆]这个函数可以只传一个需要克隆的对象，这么一个参数
+     * @param  {[type]} origin [需要克隆的对象]
+     * @param  {[type]} target [空对象,可有可无，没有的话函数内部会自动创建]
+     * @return {[type]}        [description]
+     */
+    function deepclone(origin, target) {
+        var target = target || {};
+        //传入的origin一定是对象，所以要先进行遍历，看origin每一项是值类型还是引用类型
+        for (var prop in origin) {
+            if (origin.hasOwnProperty(prop)) { //值为true代表属性不是原型上的，可以进行拷贝
+                if (typeof(origin[prop]) == "object") {
+                    if (Object.prototype.toString.call(origin[prop]) == "[object Array]") {
+                        target[prop] = [];
+                    } else {
+                        target[prop] = {};
+                    }
+                    deepclone(origin[prop], target[prop]);
+                } else {
+                    target[prop] = origin[prop];
+                }
+            }
+        }
+        return target;
+    }
+
+
+    //JQ 源码中的深克隆
+    // function deepclone(target, origin) {
+    //     var target = target || {};
+    //     if (origin != null) {
+    //         for (var prop in origin) {
+    //             // target[prop] = origin[prop];
+    //             var src = target[prop];//获取到的target中的属性的值，这里是undefined
+    //             var copy = origin[prop];//获取到的origin中的属性的值，这里是ammie
+    //             // 如果为引用值
+    //             if (typeof(copy) == "object") {
+    //                 if (Object.prototype.toString.call(copy) == "[object Array]") {
+    //                     src = [];
+    //                 } else {
+    //                     src = {};
+    //                 }
+    //                 target[prop] = deepclone(src, copy);
+    //             } else {
+    //                 target[prop] = copy;
+    //             }
+    //         }
+    //     }
+    //     return target;
+    // }
+
+    // var obj1 = {
+    //     name: undefined
+    // };
+    // var obj2 = {
+    //     name: "ammie",
+    //     hobby: {
+    //         sing: "good",
+    //         dance: "well"
+    //     }
+    // }
+    // deepclone(obj1, obj2);
+    // console.log(obj1);
+
+
+
+
+
+
+
+    //4.reduce,只要循环遍历最后返回出来的结果
+    var arr = [1, 2, 3, 4, 5];
+    arr.reduce(function(preValue, ele, index) {
+        // console.log(preValue); //上一次return出来的值
+        return ele;
+    }, 0); //0是设置初始化preValue的值
+    //如果没有设置初始值,则preValue取数组中的第一个值，第一次return的则是第二个值
+
+
+    //4.1.reduce做累加器
+    //用reduce做累加器的效率是for循环的几十倍
+    var value = arr.reduce(function(preValue, ele, index) {
+        return preValue + ele;
+    });
+    // console.log(value);
+
+    //4.2.reduce源码
+    Array.prototype.myReduce = function(func, init) {
+        //如果传了pre，累加是从0位开始的，如果没传，累加是从第1位开始的
+        //所以用k来标记索引
+        var pre = init,
+            k = 0;
+        if (init === undefined) {
+            pre = this[0];
+            k = 1;
+        }
+        for (k; k < this.length; k++) {
+        	//每次循环都会执行一遍这个函数，每次函数执行的结果都会在下一次传进第一个参数
+            pre = func(pre, this[k], k);
+        }
+        //函数执行结果返回的就是func的执行结果
+        return pre;
+    }
+    //测试myReduce
+    // var value = arr.myReduce(function(preValue, ele, index) {
+    //     return preValue + ele;
+    // });
+    // console.log(value);
+
+    //reduceRigth
+    var rr = arr.reduceRight(function(preValue,ele,index){
+    	console.log(index);
+    	return preValue;
+    })
+    console.log(rr);
+    </script>
+</body>
+
+</html>

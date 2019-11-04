@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>遍历DOM树</title>
+</head>
+
+<body>
+    <script>
+
+	    function domTree(parent, callback) {
+	        for (var i = 0; i < parent.length; i++) {
+	            //获取子元素
+	            var child = parent.children[i];
+
+	            //使用回调函数处理子元素
+	            if (callback) {
+	                callback(child);
+	            }
+
+	            //递归调用
+	            domTree(child);
+	        }
+	    }
+	    
+    </script>
+</body>
+
+</html>

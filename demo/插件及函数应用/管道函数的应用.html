@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>管道函数的应用</title>
+    <script src="helpers.js"></script>
+</head>
+
+<body>
+    利用管道函数，将一个字符串变为小驼峰命名法：<br>
+    <input type="text">&nbsp&nbsp&nbsp<button id="btn">转换为小驼峰命名法</button>
+    <div id="show"></div>
+    <script>
+    //管道函数：下一个函数的参数是上一个函数的返回值
+    var str = "    mY fIrsT   lEtteR   ";
+
+    //将字符串中每一个单词首字母大写
+    function everyFirstLetterUp(str) {
+        return str.replace(/\b(\w)(\w*)\b/g, function($, $1, $2) {
+            //$表示整个匹配，$1表示第一个分组，$2表示第二个分组
+            // console.log($,$1,$2);
+            return $1.toUpperCase() + $2;
+        })
+    }
+    //将字符串中其余每一个字符小写
+    function otherLetterLower(str) {
+        return str.replace(/\b(\w)(\w*)\b/g, function($, $1, $2) {
+            return $1 + $2.toLowerCase();
+        })
+    }
+    //去掉字符串中所有的空白字符
+    function removeSpace(str) {
+        return str.replace(/\s+/g, "");
+    }
+    //将第一个单词首字母小写
+    function firstLetterLower(str) {
+        return str.replace(/(\w)(\w*)/g, function($, $1, $2) {
+            return $1.toLowerCase() + $2;
+        })
+    }
+
+    //将一个字符串变为小驼峰命名法
+    var smallCamel = myPlugin.pipe(everyFirstLetterUp, otherLetterLower, removeSpace, firstLetterLower)
+
+    var inp = document.querySelector("input");
+    var show = document.getElementById("show");
+    btn.onclick = function() {
+        var val = inp.value;
+        var str = smallCamel(val);
+        show.innerHTML = str;
+    }
+    </script>
+</body>
+
+</html>

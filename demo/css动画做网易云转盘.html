@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>网易云转盘</title>
+	<style>
+		.wrapper{
+			position:absolute;
+			left:50%;
+			top:50%;
+			transform:translate(-50%,-50%);
+		}
+		.table{
+			width:100px;
+			height:100px;
+			border-radius: 50%;
+			border:50px solid;
+			background: url(../image/wangyimusic.jpg);
+			background-size:cover;
+			animation: move 20s linear infinite paused;
+		}
+		.pin{
+			width:10px;
+			height:100px;
+			background:#ccc;
+			position:absolute;
+			top:-50px;
+			right:40px;
+			/*用border-radius做指针*/
+			border-bottom-right-radius:100%;
+			border-bottom-left-radius: 100%;
+			/*一开始让指针指向空白处，使用旋转*/
+			transform-origin: top;
+			transform:rotate(-50deg);
+			/*为指针移动添加动画*/
+			transition:all 0.3s linear;
+		}
+		/*给table制作碟片无限旋转，用animation*/
+		@keyframes move{
+			0%{
+				transform:rotate(0);
+			}
+			100%{
+				transform:rotate(360deg);
+			}
+		}
+		/*通过添加类名的方式控制指针旋转角度*/
+		.active{
+			transform: rotate(0deg);
+		}
+	</style>
+</head>
+<body>
+	<button id="btn">点击播放</button>
+	<div class="wrapper">
+		<div class="table"></div>
+		<div class="pin"></div>
+	</div>
+
+	<script>
+		var oTable = document.getElementsByTagName("div")[1];
+		var oPin = document.getElementsByTagName("div")[2];
+
+		var flag = true;
+		btn.onclick = function(){
+			if(flag){
+				// oPin.className = "pin active";
+				oPin.setAttribute("class","pin active");
+				oTable.style.animationPlayState = "running";
+				flag = false;
+			}else{
+				oPin.className = "pin";
+				oTable.style.animationPlayState = "paused";
+				flag = true;
+			}
+		}
+	</script>
+</body>
+</html>

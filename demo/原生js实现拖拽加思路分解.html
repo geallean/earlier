@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        margin: 100px auto;
+        border: 1px solid #000;
+    }
+
+    .box {
+        position: absolute;
+        /*left:50px;
+			top:50px;*/
+        width: 200px;
+        height: 200px;
+        background: orange;
+        cursor: move;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 分解需求：
+	1.鼠标落下
+	2.鼠标移动
+	3.鼠标抬起 -->
+    <!-- 有些特殊需求例如放大镜效果，有临界值判断 -->
+    <!-- 	另外一些知识点：
+	1.阻止事件冒泡：stopPropergation
+	2.阻止事件的默认行为：preventDefault或者是return false
+	3.事件绑定的三种方式：
+		1.内联
+		2.对象.属性
+		3.addEventListener(type,listener,useCapture)
+			第三个参数为是否捕获，默认false，即不捕获，那就是冒泡
+	4.IE下的事件绑定
+		1.attachEvent()和detachEvent()
+		2.事件必须加上on
+		3.IE6模型中，不支持捕获，只支持冒泡
+		4.IE中this指向window
+	5.关于addEventListener：
+		给元素添加事件一般使用addEventListener的方式来添加，这样才可以个一个元素添加多个事件。但是由于addEventListener单词太长，容易写错，并且代码压缩的时候不会压缩，所以一般很少直接使用他，而是使用函数把他封装起来使用，避免出错：
+			function addEvent(ele,type,fn){
+				ele.addEventListener(type,function(e){
+					fn(e)
+				})
+			} -->
+    <div class="wrapper">
+        <div class="box"></div>
+    </div>
+    <!-- 拖拽  位置 -->
+    <!--  事件绑定：
+    	mousedown
+    		|——————mousemove
+    		|——————mouseup -->
+    <script>
+    //思路：监听鼠标事件----> 获得坐标 ----> 更改小方块的left、top
+
+    var oBox = document.getElementsByClassName('box')[0];
+    var oWrapper = document.getElementsByClassName('wrapper')[0];
+
+    //获取元素样式
+    function getStyle(obj, attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : window.getComputedStyle(obj)[attr];
+    }
+
+    var boxWidth = parseInt(getStyle(oBox,"width"));
+    var boxHeight = parseInt(getStyle(oBox,"height"));
+    var wrapperWidth = parseInt(getStyle(oWrapper,"width"));
+    var wrapperHeight =parseInt(getStyle(oWrapper,"height"));
+  
+
+    oBox.addEventListener('mousedown', function(e) {
+        //获取到事件对象鼠标落下事件对象e,可以获得坐标clientX和clientY
+        console.log(e);
+        //每次鼠标落下获取一次坐标
+        var lastX = e.clientX;
+        var lastY = e.clientY;
+        document.onmousemove = function(e) {
+            // console.log(e);
+            // 移动位置获取当前的坐标
+            var nowX = e.clientX;
+            var nowY = e.clientY;
+
+
+            //获得移动的距离
+            var disX = nowX - lastX;
+            var disY = nowY - lastY;
+
+
+            //最终
+            var left = oBox.offsetLeft + disX;
+            var top = oBox.offsetTop + disY;
+
+            //临界判断
+            left = left <= 0 ? 0 : left;
+            top = top <= 0 ? 0 : top;
+            left = left > (wrapperWidth - boxWidth) ? (wrapperWidth - boxWidth) : left;
+            top = top > (wrapperHeight - boxHeight) ? (wrapperHeight - boxHeight) : top;
+
+            //改变css
+            oBox.style.left = left + "px";
+            oBox.style.top = top + "px";
+
+
+            //更新lastX，lastY
+            lastX = nowX;
+            lastY = nowY;
+
+        }
+        oBox.onmouseup = function() {
+            document.onmousemove = null;
+        }
+    });
+    //如果鼠标离开wrapper区域，取消MouseMove事件
+    oWrapper.onmouseleave = function() {
+        document.onmousemove = null;
+    }
+    </script>
+</body>
+
+</html>

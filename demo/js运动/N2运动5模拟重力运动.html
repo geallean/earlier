@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>模拟重力运动</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    div {
+        width: 100px;
+        height: 100px;
+        background: orange;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+    	var oDiv = document.getElementsByTagName('div')[0];
+    	oDiv.onclick = function(){
+    		startMove(this);
+    	}
+
+    	/**
+    	 * 两种方法模拟带有阻力的重力运动
+    	 * @param  {[type]} obj [description]
+    	 * @return {[type]}     [description]
+    	 */
+    	/*
+    	在触碰时损失能量的方法
+    	 */
+    	function startMove(obj){
+    		clearInterval(obj.timer);
+    		var iSpeed = 0;
+    		var g = 9;
+    		obj.timer = setInterval(function(){
+    			iSpeed += g;
+    			var newTop = obj.offsetTop + iSpeed;
+    			if(newTop >= document.documentElement.clientHeight - obj.offsetHeight){
+    				iSpeed *= -1;
+    				//让能量在碰撞时损失
+    				iSpeed = iSpeed * 0.8;
+    				newTop = document.documentElement.clientHeight - obj.offsetHeight;
+    			}
+    			obj.style.top = newTop + "px";
+    		},30)
+    	}
+
+    	/*
+    	设置摩擦力的方法
+    	 */
+    	// function startMove(obj){
+    	// 	clearInterval(obj.timer);
+    	// 	var iSpeed = 0;
+    	// 	var g = 9;
+    	// 	//设摩擦阻力，总与速度相反
+    	// 	var u = 1;
+    	// 	obj.timer = setInterval(function(){
+    	// 		//纵向是加速运动,速度为初速度+重力加速度再乘摩擦阻力
+    	// 		iSpeed = iSpeed + g - u;
+    	// 		var newTop = obj.offsetTop + iSpeed;
+    	// 		if(newTop >= document.documentElement.clientHeight - obj.offsetHeight){
+    	// 			//碰撞之后速度取反，g和u都是与速度反向的
+    	// 			iSpeed = -iSpeed + g + u;
+    	// 			newTop = document.documentElement.clientHeight - obj.offsetHeight;
+    	// 		}
+    	// 		obj.style.top = newTop + "px";
+    	// 	},30)
+    	// }
+    </script>
+</body>
+
+</html>

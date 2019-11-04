@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>APM计算器</title>
+    <style>
+        div {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            /* background:lightblue; */
+            width: 300px;
+            text-align: center;
+
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: lighter;
+            margin-top: 50px;
+        }
+
+        button {
+            width: 60px;
+            height: 30px;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>倒计时：<span>60</span></h1>
+        <h1>点击数：<span>0</span></h1>
+        <button>点击</button>
+        <button>重置</button>
+    </div>
+
+
+    <script>
+        var oSpan = document.querySelectorAll("span");
+        var btn = document.querySelectorAll("button");
+        //使用计时器让倒计时开始
+        //点击按钮时触发
+        var timer;  //计时器ID
+        var count;  //计算有多少计时器
+        btn[0].onclick = function () {
+            if (timer) {
+                count++;
+                oSpan[1].innerHTML = count;
+            } else {
+                count = 1;
+                oSpan[1].innerHTML = count;
+                timer = setInterval(function () {
+                    var num = oSpan[0].innerHTML;
+                    num--;
+                    oSpan[0].innerHTML = num.toString().padStart(2, "0");
+                    //倒计时为0，清空计时器，点击事件置空
+                    if (num === 0) {
+                        clearInterval(timer);
+                        timer = null;
+                        btn[0].onclick = null;
+                    }
+                }, 1000)
+            }
+
+        };
+
+        //重置按钮，清空计时器个数
+        btn[1].onclick = function () {
+            clearInterval(timer);
+            timer = null;
+            oSpan[0].innerHTML = 60;
+            oSpan[1].innerHTML = 0;
+        }
+    </script>
+</body>
+
+</html>

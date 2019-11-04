@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹性运动</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		div{
+			width:100px;
+			height:100px;
+			background:orange;
+			position:absolute;
+			/*border-radius:50%;*/
+		}
+		span{
+			position:absolute;
+			left:300px;
+			top:0;
+			width:1px;
+			height:100px;
+			background:#000;
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+	<span></span>
+	<script type="text/javascript">
+		var oDiv = document.getElementsByTagName('div')[0];
+
+		oDiv.onclick = function(){
+			startMove(this);
+		}
+
+		function startMove(obj){
+			clearInterval(obj.timer);
+
+			var iSpeed = 20;
+			var a , u = 0.9;
+			obj.timer = setInterval(function(){
+				//判断在临界的哪一边做加速还是减速运动
+				//离临界点越近，力越小，加速度越小
+				a = (300 - obj.offsetLeft) / 15;
+				//设定速度
+				iSpeed = iSpeed + a;
+				//摩擦阻力
+				iSpeed = iSpeed * u;
+				//判断停止
+				if(Math.abs(iSpeed) < 1 && Math.abs(300 - obj.offsetLeft) < 1){
+					console.log("over");
+					clearInterval(obj.timer);
+				}
+				//设定最新的位置 = 当前位置 + 速度*计时器自动计时
+				obj.style.left = obj.offsetLeft + iSpeed + "px";
+			},30)
+		}
+	</script>
+</body>
+</html>

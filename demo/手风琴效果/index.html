@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>手风琴</title>
+	<style>
+		
+		.container{
+			width:400px;
+			margin:0 auto;
+		}
+		
+		.container .menu{
+			padding:10px;
+		}
+
+		.container .menu h2{
+			background:#f0f0f0;
+			padding:5px 6px 4px 6px;
+			border:1px solid #eee;
+			cursor:pointer;
+			font-size:18px;
+			color:#666;
+			font-weight:normal;
+			margin:0;
+		}
+
+		.container .menu .items{
+			padding-left: 20px;
+			display:none;
+			overflow: hidden
+		}
+
+		.container .menu .items.active{
+			display:block;
+		}
+
+		.container .menu .items a{
+			display:block;
+			text-decoration: none;
+			font-size:16px;
+			padding:5px;
+			border-bottom:1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+		<div class="container">
+			<div class="menu">
+				<h2>电影</h2>
+				<div class="items active">
+					<a href="">Lorem ipsum dolor sit.</a>
+					<a href="">Amet recusandae nihil, at!</a>
+					<a href="">Debitis, quas sapiente provident.</a>
+					<a href="">Unde vel perferendis, iure.</a>
+					<a href="">Unde nostrum modi, atque.</a>
+				</div>
+			</div>
+			<div class="menu">
+				<h2>书籍</h2>
+				<div class="items">
+					<a href="">Lorem ipsum dolor sit.</a>
+					<a href="">Amet recusandae nihil, at!</a>
+					<a href="">Debitis, quas sapiente provident.</a>
+					<a href="">Unde vel perferendis, iure.</a>
+					<a href="">Unde nostrum modi, atque.</a>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script src="index.js"></script>
+</body>
+</html>

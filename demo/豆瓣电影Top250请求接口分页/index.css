@@ -1,0 +1,129 @@
+/*@import "common.css";*/
+@import "movie.css";
+
+/*@import "//at.alicdn.com/t/font_1486914_54d1s4ph2cn.css";*/
+*{
+	margin:0;
+	padding:0;
+	list-style: none;
+	text-decoration: none;
+}
+
+/*header*/
+header{
+	background:#545652;
+	font-size:14px;
+}
+header:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+@media (max-width: 1024px){
+	header{
+		min-width: 900px;
+	}
+}
+.left,
+.right{
+	/*display:flex;*/
+	display:flex;
+	color:#d5d5d5;
+}
+.left li,
+.right li{
+	padding:5px 15px;
+	cursor: pointer;
+}
+.left{
+	float:left;
+	margin-left:30px;
+}
+.right{
+	float:right;
+	margin-right: 40px;
+}
+header a{
+	color:#d5d5d5;
+}
+header a:hover{
+	color:#fff;
+}
+
+/*nav*/
+nav{
+	padding:20px 40px;
+	background:#f0f3f5;
+	position:relative;
+	border-top: 2px solid #eee;
+	border-bottom: 2px solid #eee;
+}
+@media screen (max-width:1024px){
+	nav,
+	.container,
+	footer{
+		min-width:1000px;
+	}
+}
+.nav-primary{
+	width:1000px;
+	height:40px;
+	position:relative;
+	margin:0 auto;
+}
+.nav-primary a{
+	height:0;
+	display:inline-block;
+	width:115px;
+	overflow:hidden;
+	/*用padding撑开高度显示图片*/
+	padding-top:28px;
+	position:absolute;/*垂直居中*/
+	top:50%;
+	transform:translate(0,-50%);
+	background:url(img/header-logo-a.png) no-repeat;
+}
+.nav-primary .search{
+	display: inline-block;
+	position:absolute;/*垂直居中*/
+	top:50%;
+	transform:translate(0,-50%);
+	margin-left:250px;
+	z-index:1;
+}
+.nav-primary .nav-input{
+	width:500px;
+	height:28px;
+	border-radius:5px;
+	border:0;
+	padding-left:10px;
+	outline:none;/*取消选中时的默认蓝色框*/
+	box-shadow: 0 0 0px 0px #eee;
+}
+.nav-primary .nav-submit{
+	cursor: pointer;
+	width:37px;
+	height:28px;
+	border:0;
+	position:absolute;
+	right:0px;
+	border-radius: 0 5px 5px 0;
+	outline:none;
+	background:url(img/search.png) no-repeat #8b959e center;
+	background-size:contain;
+}
+
+/*container*/
+.container{
+	padding:30px 40px;
+}
+
+.container-header{
+	width:1000px;
+	margin: 0 auto;
+}
+.container-header h1{
+	font-size:26px;
+	color:#494949;
+	padding-bottom: 15px;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="helpers.js"></script>
+    <title>弹出框插件</title>
+</head>
+
+<body>
+    <button id="btn">弹出框插件测试</button>
+    <script>
+    /**
+	 * 弹出提示框插件配置参数
+	 * {
+            title: "这是配置标题",
+            content: "zheshi配置的内容",
+            btnConfirmText: "OK",
+            btnCancelText: "cancel",
+            btnConfirmClass: "confirm", //设置按钮类名来自定义样式
+            btnCancelClass: "cancel",
+            onconfirm:function(){//点击确定时触发的事件
+            	console.log("点击了确定");
+            },
+            oncancel:function(){//点击取消时触发的事件
+            	console.log("点击了取消");
+            }
+    	}
+	 */
+    btn.onclick = function() {
+        myPlugin.openConfirm({
+            title: "这是自定义配置标题",
+            content: "这是自定义配置的内容",
+            btnConfirmText: "OK",
+            btnCancelText: "cancel",
+            btnConfirmClass: "confirm", //设置按钮类名来自定义样式
+            btnCancelClass: "cancel",
+            onconfirm: function() { //点击确定时触发的事件
+                alert("点击了OK");
+            },
+            oncancel: function() { //点击取消时触发的事件
+                alert("点击了cancel");
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>

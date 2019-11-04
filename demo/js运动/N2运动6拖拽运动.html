@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		div{
+			width:100px;
+			height:100px;
+			background:orange;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+
+	<script>
+		var oDiv = document.getElementsByTagName('div')[0];
+		
+		oDiv.onmousedown = function (e){
+		 	var event = e || window.event;
+		 	// e.clientX是触发点距浏览器可视窗口的left
+		 	// this.offsetLeft是触发点距被触发的DOM元素的left
+		 	var disX = e.clientX - this.offsetLeft;
+		 	var disY = e.clientY - this.offsetTop;
+
+
+		 	document.onmousemove = function(e){
+		 		var newLeft = e.clientX - disX;
+		 		var newTop = e.clientY - disY;
+		 	}
+		 }
+	</script>
+</body>
+</html>

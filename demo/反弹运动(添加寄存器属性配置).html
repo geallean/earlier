@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>反弹运动(添加寄存器属性配置)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: cornflowerblue;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+
+    <script>
+        var div = document.querySelector("div");
+        var config = {
+            _x: 0,   //寄存器属性辅助变量
+            _y: 0,
+            x : 0,   //初始坐标
+            y : 0,    //初始坐标
+            xDis : 5,   //每次移动距离
+            yDis : 5,
+            duration : 16, //间隔时间
+            width : 100,    //小球宽高
+            height : 100,
+            ClientHeight : document.documentElement.clientHeight,   //浏览器视口宽高
+            ClientWidth : document.documentElement.clientWidth
+        }
+
+
+        //使用存取器属性---为属性赋值页面产生相应变化
+        //使用寄存器属性定义x,y
+        Object.defineProperty(config, "x", {
+            get: function () {
+                return this._x;
+            },
+            set: function (val) {
+                if (val < 0) {
+                    val = 0;
+                } else if (val >= this.ClientWidth - this.width) {
+                    val = this.ClientWidth - this.width;
+                }
+                this._x = val;
+                div.style.left = val + "px";
+            }
+        })
+        
+        Object.defineProperty(config, "y", {
+            get: function () {
+                return this._y;
+            },
+            set: function (val) {
+                if (val < 0) {
+                    val = 0;
+                } else if (val >= this.ClientHeight - this.height) {
+                    val = this.ClientHeight - this.height;
+                }
+                this._y = val;
+                div.style.top = val + "px";
+            }
+        })
+        
+        setInterval(function () {
+            config.x = config.x + config.xDis;
+            config.y = config.y + config.yDis;
+
+            //判断y纵向边界
+            //经过寄存器属性限定，不可能超出边界，直接按边界值判断
+            if (config.y === config.ClientHeight - config.height || config.y === 0) {
+                config.yDis = -config.yDis;
+            } 
+            //判断x横向边界
+            if (config.x === config.ClientWidth - config.width || config.x === 0) {
+                config.xDis = -config.xDis;
+            }
+        }, config.duration);
+    </script>
+</body>
+
+</html>

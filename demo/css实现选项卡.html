@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css选项卡</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			list-style:none;
+		}
+		.wrapper{
+			width:200px;
+			height:220px;
+			position:relative;
+			border:1px solid;
+			text-align:center;
+			margin:0 auto;
+		}
+		.wrapper div{
+			position:absolute;
+			top:20px;
+			left:0;
+			width:200px;
+			height:200px;
+			line-height:200px;
+			border:1px solid;
+			text-align:center;
+			display:none;
+		}
+		.wrapper div:nth-of-type(1){
+			background:red;
+		}
+		.wrapper div:nth-of-type(2){
+			background:green;
+		}
+		.wrapper div:nth-of-type(3){
+			background:yellow;
+		}
+		input{
+			width:20px;
+			height:20px;
+		}
+		input:checked + div{
+			display:block;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<input type="radio" name="tab" checked>
+		<div>a</div>
+		<input type="radio" name="tab">
+		<div>b</div>
+		<input type="radio" name="tab">
+		<div>c</div>
+	</div>
+</body>
+</html>
