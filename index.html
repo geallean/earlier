@@ -2,9 +2,96 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>INDEX</title>
+	<title>手风琴</title>
+	<style>
+		
+		.container{
+			width:400px;
+			margin:0 auto;
+		}
+		
+		.container .menu{
+			padding:10px;
+		}
+
+		.container .menu h2{
+			background:#f0f0f0;
+			padding:5px 6px 4px 6px;
+			border:1px solid #eee;
+			cursor:pointer;
+			font-size:18px;
+			color:#666;
+			font-weight:normal;
+			margin:0;
+		}
+
+		.container .menu .items{
+			padding-left: 20px;
+			display:none;
+			overflow: hidden
+		}
+
+		.container .menu .items.active{
+			display:block;
+		}
+
+		.container .menu .items a{
+			display:block;
+			text-decoration: none;
+			font-size:16px;
+			padding:5px;
+			border-bottom:1px solid #ccc;
+		}
+	</style>
 </head>
 <body>
-	WELCOME INDEX
+		<div class="container">
+			<div class="menu">
+				<h2>js效果</h2>
+				<div class="items active">
+					<a href="demo/ajax/模仿百度联想词搜索.html" target="_blank">模仿百度联想词搜索</a>
+					<a href="demo/js仿qq筛选/js数组实现筛选.html" target="_blank">js仿qq筛选</a>
+					<a href="demo/js数字时钟/js数字时钟.html" target="_blank">js数字时钟</a>
+					<a href="demo/原生三级联动/三级联动.html" target="_blank">原生三级联动</a>
+					<a href="demo/插件及函数应用/函数科里化应用.html" target="_blank">插件及函数应用</a>
+					<a href="demo/文字滚动效果/index.html" target="_blank">仿游戏通知文字滚动效果</a>
+					<a href="demo/APM计算器.html" target="_blank">APM计算器</a>
+				</div>
+			</div>
+			<div class="menu">
+				<h2>css效果</h2>
+				<div class="items">
+					<a href="demo/css3照片展开列表/index.html" target="_blank">css3照片展开列表</a>
+					<a href="demo/css图片3d翻转/css3图片3d翻转.html" target="_blank">css3图片3d翻转</a>
+					<a href="demo/css动画做网易云转盘.html" target="_blank">css动画做网易云转盘</a>
+					<a href="demo/css图片3d翻转/css3图片3d翻转.html" target="_blank">css3图片3d翻转</a>
+					<a href="demo/利用css动画做旋转照片墙.html" target="_blank">利用css动画做旋转照片墙</a>
+				</div>
+			</div>
+			<div class="menu">
+				<h2>异步接口调用</h2>
+				<div class="items">
+					<a href="demo/豆瓣电影Top250请求接口分页/index.html" target="_blank">豆瓣电影Top250接口应用及分页效果</a>
+					<a href="" target="_blank">Amet recusandae nihil, at!</a>
+					<a href="" target="_blank">Debitis, quas sapiente provident.</a>
+					<a href="" target="_blank">Unde vel perferendis, iure.</a>
+					<a href="" target="_blank">Unde nostrum modi, atque.</a>
+				</div>
+			</div>
+			<div class="menu">
+				<h2>HTML5</h2>
+				<div class="items">
+					<a href="demo/canvas刮刮乐.html" target="_blank">canvas刮刮乐</a>
+					<a href="" target="_blank">Amet recusandae nihil, at!</a>
+					<a href="" target="_blank">Debitis, quas sapiente provident.</a>
+					<a href="" target="_blank">Unde vel perferendis, iure.</a>
+					<a href="" target="_blank">Unde nostrum modi, atque.</a>
+				</div>
+			</div>
+		</div>
+
+
+		<script src="demo/插件及函数应用/helpers.js"></script>
+		<script src="index.js"></script>
 </body>
 </html>

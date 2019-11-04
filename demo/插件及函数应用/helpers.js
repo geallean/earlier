@@ -42,12 +42,12 @@ if (!window.myPlugin) {
         btnConfirmClass: "confirm", //设置按钮类名来自定义样式
         btnCancelClass: "cancel",
         onconfirm:function(){//点击确定时触发的事件
-        	console.log("点击了确定");
+            console.log("点击了确定");
         },
         oncancel:function(){//点击取消时触发的事件
-        	console.log("点击了取消");
+            console.log("点击了取消");
         }
-	}
+    }
  * @return {[type]}   [description]
  */
 window.myPlugin.openConfirm = (function() {
@@ -194,11 +194,11 @@ window.myPlugin.openConfirm = (function() {
 
         //为元素加上自定义属性，用来选取DOM进行配置或者绑定事件
         div.innerHTML = `
-    		<span style="float:left" data-myplugin-id="title"></span>
-    		<span style="float:right;cursor:pointer" data-myplugin-id="close">
-    			<img style="width:12px;height:12px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADLElEQVRYR9WX74dUURjHn+eMiIjYRIrYxCqWiCU2pRRLZMbMHzJz507v9l1zzr37hzRaEUsprSIiIsqyFbGJVURErDlPvtczY37duXO3nV2dlzP3nOfz/T7nPM857JxbJ6LjIrIchuED2odhrS0x8zIRfWfn3HsiOk9EnplLQRA8nCZDFEV3RARCDRF9YKW5rz/siEgpDMNH04Cw1t5mZgQ/BMEiUmEEUipA4I8/6sTaXkJEUbSkyg8T0Q4zV+B2AoChdIDAB7+JqFSv1x/vBYRz7hYRQfkRCITyjstdAHUClIDAh780HU//BcJae0NtPwphqrzrbh8AAiktIDDhp6bj+W4goii6prYfgyAiqgy6OgSg6QA1IDDxh6bjRR4I59wVtX0GQtT2ITdHAmg6QA8ILLBNRMV6vf5qEgjn3GUiWiWiExCgto90MRVA0wEVgMBC3wqFQrFarb4eB7GysrLQbrcR/KSCw/ZU98YCKATUtHTBLWNMsVarvRkFEcfxJe89gp8GMBGVs1zLBEAgVQUILPxF0/G2F8I5d1FtP0NEW4VCoZzlFuZPBIAPVR0gEOCzpuOdAs6r7bMANMaU01wadG5iAE0HVAJilpk34YQuuCoi5wCmtve5M27P5ALoqPXetzTghi4+ByAor1ariSuTjtwAekQviAicmNNAG8xcDoIAnTXX+P8Ams3mPDO3mBk576ZARDZFpNxoNKaXAj1qySZEQNQE+I2zr0DT24SDx9B7X+yohSvGGBSg6RxDa+0CbM9TiJCOMAzHlu2JCpE2loMpxXEcL7bbbWy4pBmJSDFLlbqVNCMR2UZJrtVqL9POZuoxtNZeVdtnsBAz52rHIoKNmbRjTQeu/0NjJEAURde10CQXEu2AqSpSOuOidsbkQqKF6llmL4jj+CZKbedKpraPpM8qeeoi0pFcybRJPemd1+dAs9lcMsZ0L6WwPQiCIeqswL3/q5uASC6l3vtKo9EYvpQOXsvV9j7aPIF7v1VXATH6Wj74MPHel3opdxu4d566i7dB/8PkwJ9m1tqPzHz2IB6nIvIJr+N1ETlFRHf383lORPeY+etflcvqsEGI1MwAAAAASUVORK5CYII=">
-    		</span>
-    	`;
+            <span style="float:left" data-myplugin-id="title"></span>
+            <span style="float:right;cursor:pointer" data-myplugin-id="close">
+                <img style="width:12px;height:12px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADLElEQVRYR9WX74dUURjHn+eMiIjYRIrYxCqWiCU2pRRLZMbMHzJz507v9l1zzr37hzRaEUsprSIiIsqyFbGJVURErDlPvtczY37duXO3nV2dlzP3nOfz/T7nPM857JxbJ6LjIrIchuED2odhrS0x8zIRfWfn3HsiOk9EnplLQRA8nCZDFEV3RARCDRF9YKW5rz/siEgpDMNH04Cw1t5mZgQ/BMEiUmEEUipA4I8/6sTaXkJEUbSkyg8T0Q4zV+B2AoChdIDAB7+JqFSv1x/vBYRz7hYRQfkRCITyjstdAHUClIDAh780HU//BcJae0NtPwphqrzrbh8AAiktIDDhp6bj+W4goii6prYfgyAiqgy6OgSg6QA1IDDxh6bjRR4I59wVtX0GQtT2ITdHAmg6QA8ILLBNRMV6vf5qEgjn3GUiWiWiExCgto90MRVA0wEVgMBC3wqFQrFarb4eB7GysrLQbrcR/KSCw/ZU98YCKATUtHTBLWNMsVarvRkFEcfxJe89gp8GMBGVs1zLBEAgVQUILPxF0/G2F8I5d1FtP0NEW4VCoZzlFuZPBIAPVR0gEOCzpuOdAs6r7bMANMaU01wadG5iAE0HVAJilpk34YQuuCoi5wCmtve5M27P5ALoqPXetzTghi4+ByAor1ariSuTjtwAekQviAicmNNAG8xcDoIAnTXX+P8Ams3mPDO3mBk576ZARDZFpNxoNKaXAj1qySZEQNQE+I2zr0DT24SDx9B7X+yohSvGGBSg6RxDa+0CbM9TiJCOMAzHlu2JCpE2loMpxXEcL7bbbWy4pBmJSDFLlbqVNCMR2UZJrtVqL9POZuoxtNZeVdtnsBAz52rHIoKNmbRjTQeu/0NjJEAURde10CQXEu2AqSpSOuOidsbkQqKF6llmL4jj+CZKbedKpraPpM8qeeoi0pFcybRJPemd1+dAs9lcMsZ0L6WwPQiCIeqswL3/q5uASC6l3vtKo9EYvpQOXsvV9j7aPIF7v1VXATH6Wj74MPHel3opdxu4d566i7dB/8PkwJ9m1tqPzHz2IB6nIvIJr+N1ETlFRHf383lORPeY+etflcvqsEGI1MwAAAAASUVORK5CYII=">
+            </span>
+        `;
 
         divCenter.appendChild(div);
 
@@ -229,9 +229,9 @@ window.myPlugin.openConfirm = (function() {
         divStyle.textAlign = "right";
 
         div.innerHTML = `
-    		<button data-myplugin-id="confirm"></button>
-    		<button data-myplugin-id="cancel"></button>
-    	`;
+            <button data-myplugin-id="confirm"></button>
+            <button data-myplugin-id="cancel"></button>
+        `;
 
         divCenter.appendChild(div);
     }
@@ -260,13 +260,13 @@ this.myPlugin.mixin = function(obj1, obj2) {
     // var newObj = {}；
     // // 复制obj2的属性
     // for(var prop in obj2){
-    // 	newObj[prop] = obj2[prop];
+    //  newObj[prop] = obj2[prop];
     // }
     // //将obj1中有 但obj2中没有的属性 添加到newObj中
     // for(var prop in obj1){
-    // 	if(!(prop in obj2)){
-    // 		newObj[prop] = obj1[prop];
-    // 	}
+    //  if(!(prop in obj2)){
+    //      newObj[prop] = obj1[prop];
+    //  }
     // }
 
     // return newObj;
@@ -361,11 +361,11 @@ this.myPlugin.pipe = function() {
 
 
         // for(var i = 0; i < args.length; i++){
-        // 	//把每一个函数拿出来
-        // 	var func = args[i];
-        // 	//每一个函数运行的结果是下一个函数运行的参数
-        // 	//将函数运行的结果赋值给val以便下一个函数调用
-        // 	val = func(val);
+        //  //把每一个函数拿出来
+        //  var func = args[i];
+        //  //每一个函数运行的结果是下一个函数运行的参数
+        //  //将函数运行的结果赋值给val以便下一个函数调用
+        //  val = func(val);
         // }
         // return val;
     }
@@ -423,3 +423,116 @@ this.myPlugin.throttle = function(callback, wait, immediately) {
         }
     }
 }
+
+
+/**
+ * 动画插件
+ * @param {[type]} option [description]
+ */
+this.myPlugin.Animate = function(option) {
+    //默认配置
+    var defaultOption = {
+        duration: 16, //默认间隔时间
+        total: 500, //默认总时间
+        begin: {}, //初始值
+        end: {}, //终止值
+    };
+    
+    this.option = myPlugin.mixin(defaultOption, option);
+    this.timer = null; //计时器ID
+    //运动总次数
+    this.number = Math.ceil(this.option.total / this.option.duration);
+    //当前运动的次数
+    this.curNumber = 0;
+    //当前状态
+    this.curData = myPlugin.clone(this.option.begin);
+    //所有属性运动的总距离
+    //循环begin相减
+    this.distance = {};
+    //所有属性每次运动的距离
+    //循环this.distance
+    this.everyDistance = {};
+    for (var prop in this.option.begin) {
+        this.distance[prop] = this.option.end[prop] - this.option.begin[prop];
+        this.everyDistance[prop] = this.distance[prop] / this.number;
+    }
+}
+
+/**
+ * 开始动画
+ * @return {[type]} [description]
+ */
+this.myPlugin.Animate.prototype.start = function() {
+    if (this.timer || this.curNumber == this.number) {
+        return; //如果之前存在计时器，则不作任何处理
+    };
+
+    var that = this;
+
+    //如果配置中有监听onstart函数，则调用
+    if(this.option.onstart){
+        this.option.onstart.call(that);
+    };
+    
+    this.timer = setInterval(function() {
+        that.curNumber++; //当前运动次数加1
+
+        //改变that.curData;发生变化
+        for (var prop in that.curData) {
+            if(that.curNumber == that.number){
+                //最后一次运动
+                that.curData[prop] = that.option.end[prop];
+            }else{
+                that.curData[prop] += that.everyDistance[prop];
+            }
+        }
+        // console.log(that.curData);
+        //监听发生变化事件
+        if(that.option.onmove){
+            that.option.onmove.call(that);
+        }
+        
+        if (that.curNumber == that.number) { //如果当前运动次数等于总次数
+            //等于了总次数
+            that.stop();
+            if(that.option.onover){
+                that.option.onover.call(that);
+            }
+        }
+    }, this.option.duration);
+}
+
+/**
+ * 停止动画
+ * @return {[type]} [description]
+ */
+this.myPlugin.Animate.prototype.stop = function() {
+    clearInterval(this.timer);
+    this.timer = null;
+}
+
+// var animate = new this.myPlugin.Animate({
+//     duration: 30,
+//     total: 500,
+//     begin: {
+//         a: 100,
+//         b: 150,
+//         c: 100
+//     },
+//     end: {
+//         a: 500,
+//         b: 15,
+//         c: 200
+//     },
+//     onstart:function(){
+//         console.log("开始");
+//     },
+//     onmove:function(){//当每次发生变化时
+//         console.log(this.curData);
+//     },
+//     onover:function(){
+//         console.log("over");
+//     }
+// })
+
+// console.log(animate);

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文字滚动效果</title>
+    <style>
+    .container {
+        background: #b3effe;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        padding: 10px 30px;
+        box-sizing: border-box;
+    }
+    @media (max-width: 1000px){
+    	.container{
+    		min-width: 1000px;
+    	}
+    }
+
+    .title,
+    .content ul{
+        height: 30px;
+        line-height: 30px
+    }
+    .content ul li{
+    	height: 30px;
+    	line-height: 30px;
+    }
+
+    .title:after {
+        content: "|";
+        font-size: 25px;
+        margin-left: 20px;
+        color: #ccc;
+        vertical-align: -2px;
+    }
+
+    .content ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        margin-left: 25px;
+        overflow: hidden;
+    }
+    .content ul li span{
+    	color:red;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            最新战报
+        </div>
+        <div class="content">
+            <ul>
+                <li>1单在<span>上海</span>杀敌<span>20万</span></li>
+                <li>2军在<span>重庆</span>杀敌<span>40万</span></li>
+                <li>3营在<span>武汉</span>杀敌<span>60万</span></li>
+                <li>4军在<span>北京</span>杀敌<span>50万</span></li>
+                <li>5军在<span>天津</span>杀敌<span>80万</span></li>
+            </ul>
+        </div>
+    </div>
+    <script src="../插件及函数应用/helpers.js"></script>
+    <script>
+    var ul = document.querySelector(".content ul");
+    var height = 30;
+    var curTop = 0;//浏览器中scrollTop取值不精确
+
+
+    //复制li
+    function cloneFirstLi() {
+        var firstLi = ul.children[0].cloneNode(true);
+        ul.appendChild(firstLi);
+    }
+    cloneFirstLi();
+
+
+    /**
+     * 开始滚动
+     * @return {[type]} [description]
+     */
+    function startScroll() {
+        setInterval(scroll,1000)
+    }
+    startScroll();
+
+
+    function scroll(){
+
+    	var animate = new myPlugin.Animate({
+    		total:500,
+    		begin:{
+    			top:curTop
+    		},
+    		end:{
+    			top:curTop + height
+    		},
+    		onmove:function(){
+    			curTop = this.curData.top;
+    			ul.scrollTop = curTop;
+    		},
+    		onover:function(){
+    			if(ul.scrollHeight - height == curTop){
+    				//滚动到底了，使滚动条回到零
+    				curTop = 0;
+    				ul.scrollTop = curTop;
+    			}
+    			// console.log(curTop,ul.scrollHeight,height);
+    		}
+    	});
+
+    	animate.start();
+
+    }
+    </script>
+</body>
+
+</html>
