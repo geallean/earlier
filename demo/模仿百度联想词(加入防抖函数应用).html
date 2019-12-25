@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp百度搜索框联想</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style: none;
+            text-decoration: none;
+        }
+        p{
+            font-size:18px;
+            margin-bottom:10px;
+            margin-left:3px;
+        }
+        .wrapper{
+            position:absolute;
+            top:10%;
+            left:50%;
+            transform: translate(-50%);
+        }
+        input{
+            font-size:18px;
+            padding-left:10px;
+            width:390px;
+            height:43px;
+        }
+        ul{
+            display:none;
+            width:400px;
+            border:1px solid #ccc;
+        }
+        li{
+            padding:10px;
+        }
+        a{
+            font-size:16px;
+            color:#000;
+        }
+        li:hover{
+            background:#ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <p>百度搜索：</p>
+        <input type="text">
+        <ul></ul>
+    </div>
+</body>
+<script>
+var oInput = document.getElementsByTagName("input")[0];
+var oUl = document.getElementsByTagName("ul")[0];
+
+
+
+oInput.oninput = debounce(getUserAction, 1000);
+
+
+    // 监听input框改变,发送jsonp请求
+    function getUserAction() {
+        var value = this.value;
+        console.log(value);
+
+        var oScript = document.createElement('script');
+        oScript.src = "https://www.baidu.com/sugrec?prod=pc&wd=" + value + "&cb=doJson";
+        document.body.appendChild(oScript);
+        //input框每次一有变化就会触发这个事件，相应就会在body中添加一个script标签
+        //每次添加后就将它删掉
+        document.body.removeChild(oScript);
+    }
+
+    //回调函数，接收请求返回的数据，并渲染至页面
+    function doJson(data) {
+        console.log(data);
+        var q = data.g;
+        console.log(q);
+        // console.log(Array.isArray(q));
+        console.log(Object.prototype.toString.call(q));
+
+        //var一个空字符串将循环数组的值拼接成一个li
+        var str = "";
+
+        //使用forEach循环数组，去除想要的值，将每一个值插入到一个li里
+
+        //当没有数组时forEach会报错，请求输入a时，返回的q是一个字符串而不是数组
+        //解决：1.改用for……in方法
+        //      2.在外层加一层判断,判断元素是否是数组
+        //在这里通过观察返回的data可知，如果没有联想数组，就不会有data.g的值，所以直接判断q是否存在即可
+        if (q) {
+            q.forEach(function(ele, index, array) {
+                str += "<li><a href='https://www.baidu.com/s?wd=" + ele.q + "'>" + ele.q + "</li>";
+            });
+            //将拼接成的li插入到ul中
+            // oUl.appendChild(str);appendChild必须填DOM
+            //innerText不可以，会将标签当成一堆字符串来添加
+            //innerHTML会将li识别成标签
+            oUl.innerHTML = str;
+
+            oUl.style.display = "block";
+        } else {
+            oUl.style.display = "none";
+        }
+
+        //判断元素是否是一个数组：
+        //var arr = [];
+        //1.Array.isArray(arr)
+        //2.arr instanceof Array
+        //3.arr.constructor === Array
+        //4.Object.prototype.toString.call(arr) === "[object Array]"
+
+        // if (Array.isArray(q)) {
+        //     q.forEach(function(ele, index, array) {
+        //         str += "<li>" + ele.q + "</li>";
+        //     });
+        //     //将拼接成的li插入到ul中
+        //     // oUl.appendChild(str);appendChild必须填DOM
+        //     oUl.innerHTML = str;
+        //     //innerText不可以，会将标签当成一堆字符串来添加
+        //     //innerHTML会将li识别成标签
+        // }
+    }
+
+    /**
+     * 防抖函数
+     * @param  {[type]} func [回调函数]
+     * @param  {[type]} time [防抖时间]
+     * @param  {[type]} flag [是否立即触发，true为立即触发事件]
+     * @return {[type]}      [description]
+     */
+    function debounce(func, time, flag) {
+        //使timer和函数不在一个作用域下
+        var timer = null;
+        // console.log(this);//window
+        var debounced = function() {
+            // console.log(this);//input
+            var _this = this;
+            var argu = arguments;
+            clearTimeout(timer);
+
+
+            if (flag) {
+                //立即触发再等一秒钟，然后一秒钟之后把计时器清空
+
+                if (!timer) func.apply(_this, argu);
+                timer = setTimeout(function() {
+                    timer = null;
+                }, time);
+
+
+            } else {
+                //先等一秒钟，再触发函数
+
+                timer = setTimeout(function() {
+                    // console.log(777);
+                    // 这里用apply改变this指向
+                    // apply和call都会将this指向改变然后执行
+                    // bind会改变this但不会执行
+                    func.apply(_this, argu);
+                    //这里的argu传进来的是return函数的e
+                }, time)
+            }
+        }
+
+        debounced.cancel = function() {
+            clearTimeout(timer);
+            timer = null;
+        }
+        return debounced;
+    }
+</script>
+
+</html>

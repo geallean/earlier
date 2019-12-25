@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+			width:100px;
+			height:100px;
+			background:blue;
+			
+			position:absolute;
+			left:500px;
+
+			transition:left 1s linear;
+		}
+	</style>
+</head>
+<body>
+	<button id="btn">点我运动</button>
+	<div></div>
+
+	<script>
+		var btn = document.getElementById("btn");
+		var div = document.getElementsByTagName("div")[0];
+
+		btn.onclick = function(){
+			div.style.left = 0;
+		}
+
+	</script>
+</body>
+</html>

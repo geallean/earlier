@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>oo编程思维</title>
+	<script src="Zombie.js"></script>
+</head>
+<body>
+<!-- 
+	在网页中，一般有三种方式实现运动效果：
+		1.Canvas画布，不停画画，画完擦掉，然后再画
+		2.css3 transition
+		3.css position定位，性能不高但是兼容性最好
+		 -->
+
+	<!-- 面向对象：Object-Oriented -->
+		1.OOA analysis 面向对象程序分析 
+						分析需求中有哪些对象，对象中有哪些属性和方法，以及对象和对象之间的关系
+		2.OOD Design  面向对象设计
+						对上一步OOA中产生的结果进行进一步优化求精，去掉不必要的类和对象，以及不必要的属性和方法
+		3.OOP programing 面向对象编程
+						使用支持面向对象特性的编程语言完成分析的代码实现
+
+
+
+	<script>
+
+		
+		//new一个对象
+		var pvZombie = new PoleVaultingZombie("撑杆僵尸");
+		pvZombie.move();
+		pvZombie.jump();
+			
+			//分析设计僵尸的属性和方法，定义成为僵尸对象
+			// var zombie = {
+			// 	name : "zombie",
+			// 	width:166,
+			// 	height:144,
+			// 	move:function(){},
+			// 	attack:function(){},
+			// 	die:function(){}
+			// };
+
+			// var zombie2 = {
+			// 	name : "zombie",
+			// 	width:166,
+			// 	height:144,
+			// 	move:function(){},
+			// 	attack:function(){},
+			// 	die:function(){}
+			// };
+
+			// var zombie3 = {
+			// 	name : "zombie",
+			// 	width:166,
+			// 	height:144,
+			// 	move:function(){},
+			// 	attack:function(){},
+			// 	die:function(){}
+			// };
+
+
+
+
+
+
+	</script>
+</body>
+</html>

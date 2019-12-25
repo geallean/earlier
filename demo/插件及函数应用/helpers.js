@@ -327,6 +327,7 @@ this.myPlugin.curry = function(func) {
     //得到从下标1开始的参数
     var args = Array.prototype.slice.call(arguments, 1); //固定的参数
     var that = this;
+    //由于返回函数，函数调用的环境不确定，所以要注意this指向问题
     return function() {
         var curArgs = Array.from(arguments); //当前函数调用的参数
         var totalArgs = args.concat(curArgs);
