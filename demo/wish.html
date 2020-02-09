@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>心愿墙</title>
+    <style>
+        .wrap {
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        right: 0;
+        top: 0;
+        border-bottom: 3px solid #aaa;
+    }
+
+    .item {
+        width: 111px;
+        height: 111px;
+        background: blue;
+        border-radius: 5px;
+		box-sizing: border-box;
+		position:absolute;
+		left:100px;
+		top: 100px;
+		cursor:move;
+    }
+    
+    .content{
+    	height:80px;
+    	padding:5px 10px;
+    	/*中文正常换行*/
+		white-space:wrap; 
+		/*英文正常换行*/
+		word-wrap:break-word;
+		overflow: hidden;
+    }
+
+    .close{
+    	position:absolute;
+    	top:5px;
+    	right:5px;
+    	cursor:pointer;
+    }
+
+    #txt{
+    	width:250px;
+    	position:fixed;
+    	bottom:30px;
+    	height:30px;
+    	left:0;
+    	right:0;
+    	margin:auto;
+    	border-radius: 5px;
+    	border:1px solid #aaa;
+    	padding:5px;
+    	font-size:20px;
+    }
+
+    #txt:hover{
+    	outline:none;
+    }
+    </style>
+</head>
+
+<body>
+    <div id='wrap' class="wrap">
+        <!-- <div class="item">
+            <div class="content">
+                世界和平
+            </div>
+            <div class="close">
+                X
+            </div>
+        </div> -->
+    </div>
+    <input type="text" id='txt'>
+    <script>
+    var wrap = document.getElementById('wrap')
+    var size = 100
+    var MaxLeft = wrap.clientWidth - size
+    var MaxTop = wrap.clientHeight - size
+    // console.log(wrap.clientWidth)
+
+    var nextZindex = 1
+
+    function createWishes(content) {
+        var div = document.createElement('div')
+        div.className = 'item'
+        div.innerHTML = `
+        <div class="content">
+                ${content}
+            </div>
+            <div class="close">
+                X
+            </div>`
+        // zindex
+        div.style.zIndex = nextZindex++
+
+        // 随机背景颜色
+        div.style.background = `rgb(${getRandom(150,250)},${getRandom(150,250)},${getRandom(150,250)})`
+
+        // 随机位置
+        div.style.left = getRandom(0, MaxLeft) + 'px'
+        div.style.top = getRandom(0, MaxTop) + 'px'
+
+        // 关闭
+        var close = div.getElementsByClassName('close')[0]
+        // console.log(close)
+        close.onclick = function() {
+            div.remove()
+        }
+
+        // 移动事件
+        div.onmousedown = function(e) {
+            div.style.zIndex = nextZindex++
+
+            var left = parseFloat(div.style.left)
+            var top = parseFloat(div.style.top)
+            // console.log(left)
+
+            var x = e.pageX
+            var y = e.pageY
+
+            window.onmousemove = function(e) {
+                var disx = e.pageX - x
+                var disy = e.pageY - y
+
+                div.style.left = left + disx + 'px'
+                div.style.top = top + disy + 'px'
+            }
+
+            window.onmouseup = function() {
+                window.onmousemove = null
+            }
+        }
+
+        wrap.appendChild(div)
+    }
+
+    function getRandom(max, min) {
+        return Math.floor(Math.random() * (max - min)) + min
+    }
+
+    var txt = document.getElementById('txt')
+    txt.onkeydown = function(e) {
+        // if()
+        // console.log(e)
+        if (e.key === 'Enter' && txt.value) {
+            createWishes(txt.value)
+        }
+    }
+
+    function init() {
+        var wish = ['世界和平1', '世界和平2', '世界和平3','世界和平4','世界和平5']
+
+        for (var i = 0; i < wish.length; i++) {
+            createWishes(wish[i])
+        }
+    }
+    init()
+    </script>
+</body>
+
+</html>
